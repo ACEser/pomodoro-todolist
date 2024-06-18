@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTodos } from '../state/TodoContext';
+import {createTask } from '../api/api.js'
 
 function TodoInput({ addTask }) {
   const [taskContent, setTaskContent] = useState('');
 
   const handleInputChange = (e) => {
-    setTaskContent(e.target.value);
+    createTask(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -13,30 +15,28 @@ function TodoInput({ addTask }) {
     addTask(taskContent);
     setTaskContent('');
   };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={taskContent} onChange={handleInputChange} placeholder="Add new task..." />
-      {/*
-  Heads up! 👋
+    <div>
+    <label
+      htmlFor="taskContent"
+      className="relative block overflow-hidden rounded-md border border-gray-200 px-3 pt-3 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+    >
+      <input
+        type="text"
+        id="taskContent"
+        placeholder="待办内容"
+        onChange={handleInputChange} 
+        className="peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+      />
 
-  Plugins:
-    - @tailwindcss/forms
-*/}
-
-  <div>
-    <label htmlFor="UserEmail" className="block text-xs font-medium text-gray-700"> 待办内容 </label>
-
-    <input
-      type="text"
-      id="UserEmail"
-      placeholder="john@rhcp.com"
-      className="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
-    />
-  </div>
+      <span
+        className="absolute start-3 top-3 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs"
+      >
+        待办内容
+      </span>
+    </label>
       <button type="submit">Create</button>
-    </form>
+    </div>
   );
 }
-
 export default TodoInput;

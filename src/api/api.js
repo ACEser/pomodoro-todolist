@@ -20,7 +20,7 @@ export const getTasks = async (userId) => {
 
 export const createTask = async (task) => {
   try {
-    const response = await axiosInstance.post('/api/tasks/settings/${userId}/create_Task.php?userId=${userId}', task);
+    const response = await axiosInstance.post('/api/tasks/settings/${userId}/create_task.php?userId=${userId}', task);
     return response.data;
   } catch (error) {
     console.error("Error creating task", error);
