@@ -1,33 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@tailwind base; /* 导入 Tailwind CSS 的基础样式 */
+@tailwind components; /* 导入 Tailwind CSS 的组件样式 */
+@tailwind utilities; /* 导入 Tailwind CSS 的实用工具样式 */
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+:root { /* 对于整个文档，设置一些自定义的 CSS 变量 */
+  --foreground-rgb: 0, 0, 0; /* 前景色（文字颜色）的 RGB 值 */
+  --background-start-rgb: 214, 219, 220; /* 背景渐变的起始颜色的 RGB 值 */
+  --background-end-rgb: 255, 255, 255; /* 背景渐变的结束颜色的 RGB 值 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@media (prefers-color-scheme: dark) { /* 如果用户的操作系统设置为暗色模式 */
+  :root { /* 对于整个文档，设置一些自定义的 CSS 变量 */
+    --foreground-rgb: 255, 255, 255; /* 前景色（文字颜色）的 RGB 值 */
+    --background-start-rgb: 0, 0, 0; /* 背景渐变的起始颜色的 RGB 值 */
+    --background-end-rgb: 0, 0, 0; /* 背景渐变的结束颜色的 RGB 值 */
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
+body { /* 对于 body 元素 */
+  color: rgb(var(--foreground-rgb)); /* 设置文字颜色 */
+  background: linear-gradient( /* 设置背景为一个线性渐变 */
+      to bottom, /* 渐变方向从上到下 */
+      transparent, /* 渐变的起始颜色为透明 */
+      rgb(var(--background-end-rgb)) /* 渐变的结束颜色为自定义的变量 */
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); /* 背景的基础颜色为自定义的变量 */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer utilities { /* 在 Tailwind CSS 的实用工具层添加新的类 */
+  .text-balance { /* 添加一个名为 text-balance 的类 */
+    text-wrap: balance; /* 设置文字的换行方式为 balance */
   }
 }

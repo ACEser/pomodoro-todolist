@@ -1,6 +1,10 @@
 import React from 'react';
 
 function TodoItem({ task, deleteTask, toggleComplete, showDetail }) {
+  if (!task) {
+    return null; 
+  }
+
   const { taskId, content, isCompleted } = task;
   
   return (
