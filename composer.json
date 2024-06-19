@@ -1,0 +1,14 @@
+{
+    "name": "wanwen332/pomodro",
+    "description": "JWT",
+    "type": "library",
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wanwen332\\Pomodro\\": "src/"
+        }
+    }
+}
