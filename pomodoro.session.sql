@@ -41,14 +41,6 @@ CREATE TABLE `Habits` (
   `CreateTime` timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE PomodoroSettings (
-    UserId INT PRIMARY KEY,
-    workDuration INT NOT NULL,
-    shortBreak INT NOT NULL,
-    longBreak INT NOT NULL,
-    autoRepeat BOOLEAN NOT NULL
-);
-
 ALTER TABLE `Pomodoro` ADD FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`);
 
 ALTER TABLE `Pomodoro` ADD FOREIGN KEY (`TaskID`) REFERENCES `Tasks` (`TaskID`);
@@ -64,4 +56,8 @@ ALTER TABLE `Tasks` ADD FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`);
 ALTER TABLE `Habits` ADD FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`);
 
 ALTER TABLE `Pomodoro`
+MODIFY `TaskID` int NULL,
+MODIFY `HabitID` int NULL,
 ADD `Type` varchar(10) DEFAULT NULL;
+
+SELECT * FROM Users;

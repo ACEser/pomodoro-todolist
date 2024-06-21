@@ -56,3 +56,23 @@ export const getPomodoroSettings = async (userId) => {
     throw error;
   }
 };
+
+
+
+async function login(username, password) {
+  try {
+    const response = await axios.post('./util/login.php', {
+      username,
+      password
+    });
+
+    if (response.data.success) {
+      return response.data.token;
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.error('登录失败:', error);
+    throw error;
+  }
+}

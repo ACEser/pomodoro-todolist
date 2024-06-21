@@ -12,4 +12,7 @@ $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if($conn->connect_error){
     die("连接失败: " . $conn->connect_error);
 }
+// 如果没有错误，输出一条连接成功的消息
+echo "连接成功！";
+
 ?>

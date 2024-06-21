@@ -1,4 +1,5 @@
 import React from 'react';
+
 function Navbar() {
     return (
         <header class="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md">
