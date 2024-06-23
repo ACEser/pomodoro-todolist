@@ -1,9 +1,34 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:800/src/api'; // Change this to your actual API base URL
+const API_BASE_URL = 'http://localhost:800/src'; // Change this to your actual API base URL
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
+});
+
+// 请求拦截器
+axiosInstance.interceptors.request.use(config => {
+  // 读取存储的 Token
+  const token = localStorage.getItem('jwtToken');
+  if (token) {
+    // 附加 Token 到 Authorization 头部
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// 响应拦截器
+axiosInstance.interceptors.response.use(response => {
+  // 处理响应
+  return response;
+}, error => {
+  // 处理错误，例如 Token 过期
+  if (error.response && error.response.status === 401) {
+    // 清除 Token 并重定向到登录页面
+    localStorage.removeItem('jwtToken');
+    window.location.href = '/login';
+  }
+  return Promise.reject(error);
 });
 
 export const getTasks = async (userId) => {
@@ -15,8 +40,6 @@ export const getTasks = async (userId) => {
     throw error;
   }
 };
-
-// Define other API functions here (createTask, updateTask, deleteTask)
 
 export const createTask = async (task) => {
   try {
@@ -57,15 +80,12 @@ export const getPomodoroSettings = async (userId) => {
   }
 };
 
-
-
-async function login(username, password) {
+export const login = async (username, password) => {
   try {
-    const response = await axios.post('./util/login.php', {
+    const response = await axios.post(`${API_BASE_URL}/util/login.php`, {
       username,
       password
     });
-
     if (response.data.success) {
       return response.data.token;
     } else {
@@ -75,4 +95,4 @@ async function login(username, password) {
     console.error('登录失败:', error);
     throw error;
   }
-}
+};

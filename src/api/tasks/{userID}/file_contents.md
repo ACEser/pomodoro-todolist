@@ -1,4 +1,6 @@
+# File Contents Report
 
+This document contains the paths and contents of all files in the current directory.
 
 ## File: .\create_tasks.php
 
@@ -7,18 +9,21 @@
 
 // 引入数据库连接
 require_once 'db_connection.php';
-
+require_once 'jwt_validate.php';
 header('Content-Type: application/json');
 
 // 读取POST请求体
 $input = json_decode(file_get_contents('php://input'), true);
 
-// 验证输入
-if (!isset($input['userId']) || !isset($input['content'])) {
-    http_response_code(400);
-    echo json_encode(['message' => 'Missing required fields']);
+// 验证 Token
+$decoded = validateJWTToken($input['token']);
+if (!$decoded) {
+    // Token 验证失败，返回错误响应
+    http_response_code(401);
+    echo json_encode(array("message" => "Unauthorized"));
     exit();
 }
+
 
 $userId = $input['userId'];
 $content = $input['content'];
@@ -111,7 +116,21 @@ $conn->close();
 // 引入数据库连接
 require_once 'db_connection.php';
 
+require_once 'db_connection.php';
+require_once 'jwt_validate.php';
 header('Content-Type: application/json');
+
+// 读取POST请求体
+$input = json_decode(file_get_contents('php://input'), true);
+
+// 验证 Token
+$decoded = validateJWTToken($input['token']);
+if (!$decoded) {
+    // Token 验证失败，返回错误响应
+    http_response_code(401);
+    echo json_encode(array("message" => "Unauthorized"));
+    exit();
+}
 
 // 获取查询参数
 $queryUserId = isset($_GET['userId']) ? $_GET['userId'] : null;
@@ -202,10 +221,21 @@ with open('file_contents.md', 'w', encoding='utf-8') as md_file:
 <?php
 
 require_once 'db_connection.php';
-
+require_once 'jwt_validate.php';
 header('Content-Type: application/json');
 
-// 假设已通过其他方式验证了用户ID和权限
+// 读取POST请求体
+$input = json_decode(file_get_contents('php://input'), true);
+
+// 验证 Token
+$decoded = validateJWTToken($input['token']);
+if (!$decoded) {
+    // Token 验证失败，返回错误响应
+    http_response_code(401);
+    echo json_encode(array("message" => "Unauthorized"));
+    exit();
+}
+
 $taskId = $_GET['taskId']; // 或者从URL路径参数中获取
 
 $input = json_decode(file_get_contents('php://input'), true);

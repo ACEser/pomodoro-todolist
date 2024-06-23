@@ -1,18 +1,26 @@
-// reducers.js
+// reducers/authReducer.js
 const initialState = {
   token: null,
+  isAuthenticated: false,
 };
 
-const rootReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SAVE_TOKEN':
+    case 'LOGIN_SUCCESS':
       return {
         ...state,
         token: action.payload,
+        isAuthenticated: true,
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
       };
     default:
       return state;
   }
 };
 
-export default rootReducer;
+export default authReducer;
