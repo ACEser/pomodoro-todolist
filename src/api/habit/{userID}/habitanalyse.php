@@ -1,0 +1,59 @@
+// habits.php
+
+<?php
+
+require_once 'db_connection.php'; // 假设这个文件包含数据库连接信息
+
+header('Content-Type: application/json');
+
+// 假设已经有一个函数来验证用户的身份，并获取其UserID
+// $userId = getUserIdFromToken();
+
+$userId = $_GET['userID']; // 示例用户ID，实际应用中应该从JWT Token中获取
+
+// 查询习惯列表
+$stmt = $conn->prepare("
+    SELECT h.HabitID, h.Name, h.CreateTime
+    FROM Habits h
+    WHERE h.UserID = ?
+");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$habits = [];
+
+while ($row = $result->fetch_assoc()) {
+    $habitId = $row['HabitID'];
+
+    // 查询每个习惯的完成记录
+    $recordStmt = $conn->prepare("
+        SELECT hr.Date, hr.IsCompleted
+        FROM HabitRecords hr
+        WHERE hr.HabitID = ?
+        ORDER BY hr.Date DESC
+    ");
+    $recordStmt->bind_param("i", $habitId);
+    $recordStmt->execute();
+    $recordsResult = $recordStmt->get_result();
+
+    $completionStatus = [];
+    while ($recordRow = $recordsResult->fetch_assoc()) {
+        $completionStatus[] = [
+            'date' => $recordRow['Date'],
+            'isCompleted' => (bool) $recordRow['IsCompleted'] // 确保isCompleted是布尔值
+        ];
+    }
+
+    $habits[] = [
+        'habitId' => $habitId,
+        'name' => $row['Name'],
+        'createTime' => $row['CreateTime'],
+        'completionStatus' => $completionStatus
+    ];
+}
+
+echo json_encode($habits);
+
+$conn->close();
+?>
