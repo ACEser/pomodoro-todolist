@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { saveToken } from "./actions";
+import { saveToken } from "./authActions";
 import { useEffect, useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -37,10 +37,10 @@ function Login() {
         .post("http://localhost:800/src/api/util/login.php", formValues)
         .then((response) => {
           if (response.data.success) {
-            console.log(response.data.message); // 打印 "登录成功。"
-            console.log(response.data.token); // 打印 token
+/*             console.log(response.data.message); // 打印 "登录成功。"
+            console.log(response.data.token); // 打印 token */
             const token = response.data.token;
-            console.log(token);
+
             dispatch(saveToken(token));
           }
         })

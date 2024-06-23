@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { saveToken } from "./actions";
+import { saveToken } from "./authActions";
 import { useEffect, useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";

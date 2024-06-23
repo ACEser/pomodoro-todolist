@@ -2,8 +2,6 @@
 
 <?php
 
-
-
 require_once 'D:\code\A_project\Sample\pomodro\vendor\autoload.php';// 确保这个路径指向你的vendor/autoload.php文件
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -28,11 +26,7 @@ function generateJWTToken($userId) {
 }
 
 
-function test(){
-    global $userId;
-    generateJWTToken($userId);
-}
-test();
+
 // 验证JWT Token的函数
 function validateJWTToken($token) {
     global $key;
