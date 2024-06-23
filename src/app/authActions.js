@@ -1,9 +1,26 @@
-// actions/authActions.js
-export const loginSuccess = (token) => ({
-  type: 'LOGIN_SUCCESS',
-  payload: token,
-});
+// reducers/authReducer.js
+const initialState = {
+  token: null,
+  isAuthenticated: false,
+};
 
-export const logout = () => ({
-  type: 'LOGOUT',
-});
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "LOGIN_SUCCESS":
+      return {
+        ...state,
+        token: action.payload,
+        isAuthenticated: true,
+      };
+    case "LOGOUT":
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export default authReducer;

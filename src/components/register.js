@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { saveToken } from "./authActions";
+import { saveToken } from "./actions";
 import { useEffect, useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
 import "./login.css";
 import { Link } from "react-router-dom";
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AppRouter from "../APP";
 
 function Register() {
   const initialValues = {
@@ -135,7 +134,7 @@ function Register() {
         <div className="text">
           我已有账户{" "}
           <span>
-            <Link to="/login">登录</Link>
+            <Link>登录</Link>
           </span>
         </div>
       </div>{" "}

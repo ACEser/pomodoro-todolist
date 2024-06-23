@@ -31,7 +31,49 @@ axiosInstance.interceptors.response.use(response => {
   return Promise.reject(error);
 });
 
-export const getTasks = async (userId) => {
+
+const api = {
+  createTodo: async (todo) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/create_todo.php`, todo);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating todo:', error);
+      throw error;
+    }
+  },
+  updateTodo: async (id, updatedTodo) => {
+    try {
+      const response = await axios.put(`${API_BASE_URL}/update_todo.php`, { ...updatedTodo, taskID: id });
+      return response.data;
+    } catch (error) {
+      console.error('Error updating todo:', error);
+      throw error;
+    }
+  },
+  deleteTodo: async (id) => {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/delete_todo.php`, { data: { taskID: id } });
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+      throw error;
+    }
+  },
+  createPomodoro: async (pomodoroData) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/create_pomodoro.php`, pomodoroData);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating pomodoro:', error);
+      throw error;
+    }
+  },
+};
+
+export default api;
+
+/* export const getTasks = async (userId) => {
   try {
     const response = await axiosInstance.get(`/api/tasks/settings/${userId}/get_tasks.php?userId=${userId}`);
     return response.data;
@@ -69,7 +111,7 @@ export const deleteTask = async (taskId) => {
     throw error;
   }
 };
-
+ */
 export const getPomodoroSettings = async (userId) => {
   try {
     const response = await axiosInstance.get(`/api/pomodoro/settings/${userId}/getPomodoroSettings.php?userId=${userId}`);

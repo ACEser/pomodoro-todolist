@@ -1,0 +1,50 @@
+<?php
+// create_pomodoro.php
+
+// 引入数据库连接
+require_once 'db_connection.php';
+require_once 'jwt_validate.php';
+
+header('Content-Type: application/json');
+
+// 读取POST请求体
+$input = json_decode(file_get_contents('php://input'), true);
+
+// 验证 Token
+$decoded = validateJWTToken($input['token']);
+
+if (!$decoded) {
+    // Token 验证失败，返回错误响应
+    http_response_code(401);
+    echo json_encode(array("message" => "Unauthorized"));
+    exit();
+}
+
+// 获取用户ID
+$userID = $decoded;
+
+// 获取番茄钟数据
+$taskID = $input['TaskID'] ?? null;
+$habitID = $input['HabitID'] ?? null;
+$startTime = $input['StartTime'];
+$endTime = $input['EndTime'];
+$isCompleted = $input['IsCompleted'] ? 1 : 0;
+$type = $input['Type'] ?? null;
+
+// 插入数据库
+$query = "INSERT INTO Pomodoro (UserID, TaskID, HabitID, StartTime, EndTime, IsCompleted, Type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("iiisssi", $userID, $taskID, $habitID, $startTime, $endTime, $isCompleted, $type);
+
+if ($stmt->execute()) {
+    $pomodoroID = $stmt->insert_id;
+    http_response_code(201);
+    echo json_encode(array("message" => "Pomodoro created successfully", "pomodoroID" => $pomodoroID));
+} else {
+    http_response_code(500);
+    echo json_encode(array("message" => "Failed to create pomodoro"));
+}
+
+$stmt->close();
+$conn->close();
+?>

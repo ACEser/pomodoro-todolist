@@ -1,9 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/OnlineState/state';
+// store.js
+import {
+  legacy_createStore as createStore,
+  combineReducers,
+  applyMiddleware,
+} from "redux";
+import { thunk } from "redux-thunk";
+import authReducer from "./authReducer";
 
-export default configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-
+const rootReducer = combineReducers({
+  auth: authReducer,
 });
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+export default store;
