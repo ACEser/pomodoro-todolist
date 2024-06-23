@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { saveToken } from "./authActions";
+import { loginSuccess } from "./authActions";
 import { useEffect, useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -30,25 +30,25 @@ function Login() {
   };
 
   const dispatch = useDispatch();
-  useEffect(() => {
+
+useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      axios
-        .post("http://localhost:800/src/api/util/login.php", formValues)
-        .then((response) => {
-          if (response.data.success) {
-/*             console.log(response.data.message); // 打印 "登录成功。"
-            console.log(response.data.token); // 打印 token */
-            const token = response.data.token;
-
-            dispatch(saveToken(token));
-          }
-        })
-        .catch(() => {
-          console.log("error");
-        });
+        axios
+            .post("http://localhost:800/src/api/util/login.php", formValues)
+            .then((response) => {
+                if (response.data.success) {
+                    const token = response.data.token;
+                    dispatch(loginSuccess(token));
+                    localStorage.setItem('jwtToken', token);
+                }
+            })
+            .catch(() => {
+                console.log("error");
+            });
     }
-  }, [formErrors, formValues, isSubmit]);
+}, [formErrors, formValues, isSubmit]);
+
 
   const validate = (values) => {
     const errors = {};

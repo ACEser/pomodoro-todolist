@@ -9,7 +9,7 @@ use PhpMyAdmin\Console;
 
 $key = "1fcz23456"; // 用于签名Token的密钥，应该是一个复杂的字符串，生产环境中不应该硬编码在代码中
 
-$userId = 123; // 假设这是用户的ID
+
 // 生成JWT Token的函数
 function generateJWTToken($userId) {
     global $key;
