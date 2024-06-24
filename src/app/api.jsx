@@ -69,6 +69,44 @@ const api = {
       throw error;
     }
   },
+
+  createHabit: async (habitData) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/create_habit.php`, habitData);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating habit:', error);
+      throw error;
+    }
+  },
+  deleteHabit: async (habitId) => {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/delete_habit.php?id=${habitId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting habit:', error);
+      throw error;
+    }
+  },
+  completeHabit: async (habitId, completed) => {
+    try {
+      const response = await axios.put(`${API_BASE_URL}/complete_habit.php`, { id: habitId, completed: completed });
+      return response.data;
+    } catch (error) {
+      console.error('Error completing habit:', error);
+      throw error;
+    }
+  },
+  getHabits: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/get_habits.php`);
+      return response.data;
+    } catch (error) {
+      console.error('Error getting habits:', error);
+      throw error;
+    }
+  },
+
 };
 
 export default api;
