@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import Register from "./register";
-import Login from "./login";
+import Register from "./login/login.jsx";
+import Login from "./login/Register";
 
 export default function AppRoutes() {
   return (
@@ -10,5 +10,3 @@ export default function AppRoutes() {
     </Routes>
   );
 }
-
-function sidenavbar() {}

@@ -1,17 +1,16 @@
-"use client";
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+"use client"
+import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import store from './store'; // 确保你已经定义了 store
-import Login from './Login';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import store from './global/store'; // 确保你已经定义了 store
+import Login from './login/login';
+import Register from './login/Register';
 import Logout from './Logout';
-import Todo from './Todo';
-import Habit from './Habit';
+import Todo from './components/Todo';
+import Habit from './components/Habit';
 import PomodoroTimer from './Pomodoro';
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from './global/PrivateRoute';
 import Layout from './Layout';
-import { loginSuccess, logout } from './authReducer'; // 确保你已经定义了这些 actions
 
 const App = () => {
   return (
@@ -24,7 +23,8 @@ const App = () => {
             <Route path="/todo" element={<PrivateRoute component={Todo} />} />
             <Route path="/habit" element={<PrivateRoute component={Habit} />} />
             <Route path="/pomodoro" element={<PrivateRoute component={PomodoroTimer} />} />
-            <Route path="*" exact element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Login />} />
           </Routes>
         </Layout>
       </Router>
@@ -33,4 +33,3 @@ const App = () => {
 };
 
 export default App;
-

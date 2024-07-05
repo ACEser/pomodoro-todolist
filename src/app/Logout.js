@@ -1,7 +1,7 @@
 // components/Logout.js
 import React from "react";
 import { useDispatch } from "react-redux";
-import authReducer from "./authReducer";
+import authReducer from "./global/authReducer";
 
 const Logout = () => {
   const dispatch = useDispatch();

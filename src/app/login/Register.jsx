@@ -1,6 +1,8 @@
+"use client"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./login.css";
+import Login from "./login";
 import { Link } from "react-router-dom";
 
 function Register() {

@@ -1,8 +1,6 @@
-// jwt_utils.php
-
 <?php
 
-require_once 'D:\code\A_project\Sample\pomodro\vendor\autoload.php';// 确保这个路径指向你的vendor/autoload.php文件
+require_once '../../../vendor/autoload.php';// 路径指向vendor/autoload.php文件
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use PhpMyAdmin\Console;
@@ -20,7 +18,6 @@ function generateJWTToken($userId) {
         'iat' => $issuedAt,
         'exp' => $expirationTime
     );
-    echo json_encode($payload);
     $jwt = JWT::encode($payload, $key, 'HS256');
     return $jwt;
 }

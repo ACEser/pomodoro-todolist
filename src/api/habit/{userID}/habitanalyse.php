@@ -2,24 +2,11 @@
 
 <?php
 
-/ 引入数据库连接
-require_once 'db_connection.php';
-require_once 'jwt_validate.php';
+require_once 'db_connection.php'; // 假设这个文件包含数据库连接信息
 
 header('Content-Type: application/json');
 
-// 读取POST请求体
-$input = json_decode(file_get_contents('php://input'), true);
 
-// 验证 Token
-$decoded = validateJWTToken($input['token']);
-
-if (!$decoded) {
-    // Token 验证失败，返回错误响应
-    http_response_code(401);
-    echo json_encode(array("message" => "Unauthorized"));
-    exit();
-}
 
 // 查询习惯列表
 $stmt = $conn->prepare("

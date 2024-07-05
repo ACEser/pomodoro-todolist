@@ -1,4 +1,4 @@
--- Active: 1716465236302@@127.0.0.1@3306@pomodoro
+-- Active: 1716465236302@@127.0.0.1@3306
 USE  pomodoro;
 
 CREATE TABLE `Users` (
@@ -14,7 +14,7 @@ CREATE TABLE `Pomodoro` (
   `TaskID` int,
   `HabitID` int,
   `StartTime` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `EndTime` timestamp,
+  `EndTime` timestamp NULL,
   `IsCompleted` boolean DEFAULT FALSE
 );
 
@@ -59,5 +59,3 @@ ALTER TABLE `Pomodoro`
 MODIFY `TaskID` int NULL,
 MODIFY `HabitID` int NULL,
 ADD `Type` varchar(10) DEFAULT NULL;
-
-SELECT * FROM Users;

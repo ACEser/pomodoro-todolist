@@ -7,20 +7,20 @@ export default function Habit() {
   const [habits, setHabits] = useState([
     {
       id: 1,
-      name: "Exercise",
-      description: "Do 30 minutes of exercise daily",
+      name: "运动",
+      description: "每天运动30分钟",
       completed: false,
     },
     {
       id: 2,
-      name: "Read",
-      description: "Read for 1 hour every day",
+      name: "阅读",
+      description: "每天阅读一小时",
       completed: true,
     },
     {
       id: 3,
-      name: "Meditate",
-      description: "Meditate for 10 minutes in the morning",
+      name: "冥想",
+      description: "早上冥想十分钟",
       completed: false,
     },
   ]);
@@ -91,22 +91,22 @@ export default function Habit() {
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-primary text-primary-foreground py-4 px-6">
-        <h1 className="text-2xl font-bold">Habit Tracker</h1>
+        <h1 className="text-2xl font-bold">习惯追踪</h1>
       </header>
       <main className="flex-1 p-6 space-y-6">
         <div>
-          <h2 className="text-xl font-bold mb-2">Add a New Habit</h2>
+          <h2 className="text-xl font-bold mb-2">创建新习惯</h2>
           <div className="flex space-x-4">
             <input
               type="text"
-              placeholder="Habit Name"
+              placeholder="习惯名称"
               value={newHabitName}
               onChange={(e) => setNewHabitName(e.target.value)}
               className="flex-1 p-2 border border-gray-300 rounded"
             />
             <input
               type="text"
-              placeholder="Habit Description"
+              placeholder="描述"
               value={newHabitDescription}
               onChange={(e) => setNewHabitDescription(e.target.value)}
               className="flex-1 p-2 border border-gray-300 rounded"
@@ -120,7 +120,7 @@ export default function Habit() {
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-bold mb-2">Your Habits</h2>
+          <h2 className="text-xl font-bold mb-2">你的习惯</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {habits.map((habit) => (
               <div
@@ -149,10 +149,10 @@ export default function Habit() {
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-bold mb-2">Habit History</h2>
+          <h2 className="text-xl font-bold mb-2">记录</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4 border border-gray-300 rounded space-y-4">
-              <h3 className="text-lg font-bold">Completion Calendar</h3>
+              <h3 className="text-lg font-bold">完成视图</h3>
               <div className="grid grid-cols-7 gap-1">
                 {getHabitCompletionHistory().map((completions, index) => (
                   <div
@@ -167,13 +167,13 @@ export default function Habit() {
               </div>
             </div>
             <div className="p-4 border border-gray-300 rounded space-y-4">
-              <h3 className="text-lg font-bold">Completion Rate</h3>
+              <h3 className="text-lg font-bold">完成率</h3>
               <div className="text-4xl font-bold">
                 {getCompletionRate().toFixed(0)}%
               </div>
             </div>
             <div className="p-4 border border-gray-300 rounded space-y-4">
-              <h3 className="text-lg font-bold">Longest Streak</h3>
+              <h3 className="text-lg font-bold">坚持天数</h3>
               <div className="text-4xl font-bold">{getLongestStreak()}</div>
             </div>
           </div>

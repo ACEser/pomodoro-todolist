@@ -1,20 +1,23 @@
+
+"use client";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { saveToken } from "./actions";
+import {loginSuccess} from "../global/authActions";
 import { useEffect, useState } from "react";
-import store from "./store";
+import store from "../global/store";
 import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
 import "./login.css";
-import { Link } from "react-router-dom";
-import AppRouter from "../APP";
+import Register from "./Register";
+import { Link , useNavigate} from "react-router-dom";
+import AppRouter from "../routes";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function Register() {
+
+function Login() {
   const initialValues = {
     username: "",
-    email: "",
     password: "",
-    confirmPassword: "",
   };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -32,17 +35,28 @@ function Register() {
   };
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       axios
-        .post("http://localhost:800/src/api/util/register.php", formValues)
+        .post("http://localhost:800/src/api/util/login.php", formValues)
         .then((response) => {
-          console.log(response.data);
-        })
-        .catch(() => {
-          console.log("error");
-        });
+          if (response.data.success) {
+            const token = response.data.token;
+            dispatch(loginSuccess(token));
+            navigate('/todo'); 
+            localStorage.setItem("jwtToken", token);
+            
+          }
+        }
+      )
+        .catch((error) => {
+    console.log("error:", error); // 打印整个错误对象
+    console.log("error message:", error.message); // 打印错误消息
+    console.log("error response:", error.response); // 打印错误响应（如果有的话）
+    console.log("error request:", error.request); // 打印错误请求（如果有的话）
+  });
     }
   }, [formErrors, formValues, isSubmit]);
 
@@ -52,11 +66,6 @@ function Register() {
     if (!values.username) {
       errors.username = "Username is required!";
     }
-    if (!values.email) {
-      errors.email = "Email is required!";
-    } else if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
-    }
     if (!values.password) {
       errors.password = "Password is required";
     } else if (values.password.length < 4) {
@@ -64,9 +73,7 @@ function Register() {
     } else if (values.password.length > 10) {
       errors.password = "Password cannot exceed more than 10 characters";
     }
-    if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = "Those passwords didn’t match. Try again.";
-    }
+
     return errors;
   };
 
@@ -75,15 +82,14 @@ function Register() {
       <div className="bgImg"></div>
       <div className="container">
         {Object.keys(formErrors).length === 0 && isSubmit ? (
-          <div className="ui message success">注册成功</div>
+          <div className="ui message success">登录成功</div>
         ) : (
           console.log("Entered Details", formValues)
         )}
 
         <form onSubmit={handleSubmit}>
-          <h1>注册</h1>
-          <div className="ui divider"></div>
-          <div className="ui form">
+          <h1>登录</h1>
+          <div className="ui divider">
             <div className="field">
               <label>用户名</label>
               <input
@@ -96,17 +102,6 @@ function Register() {
             </div>
             <p>{formErrors.username}</p>
             <div className="field">
-              <label>邮箱</label>
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={formValues.email}
-                onChange={handleChange}
-              />
-            </div>
-            <p>{formErrors.email}</p>
-            <div className="field">
               <label>密码</label>
               <input
                 type="password"
@@ -117,29 +112,19 @@ function Register() {
               />
             </div>
             <p>{formErrors.password}</p>
-            <div className="field">
-              <label>确认密码</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm password"
-                value={formValues.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-            <p>{formErrors.confirmPassword}</p>
-            <button className="fluid ui button blue">创建账户</button>
+            <button className="fluid ui button blue">登录</button>
           </div>
         </form>
+
         <div className="text">
-          我已有账户{" "}
+          没有账号{" "}
           <span>
-            <Link>登录</Link>
+            <Link to="/Register">注册</Link>
           </span>
         </div>
-      </div>{" "}
+      </div>
     </>
   );
 }
 
-export default Register;
+export default Login;

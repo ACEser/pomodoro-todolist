@@ -2,12 +2,11 @@
 "use client"
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import PomodoroTimer from "./Pomodoro"; // 假设Pomodoro组件已经存在
-import { TitleContext } from "./TitleContext";
+import { TitleContext } from "../TitleContext";
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
-import api from './api';
-import { useRouter } from 'next/router';
+import { useParams ,useNavigate, Navigate} from "react-router-dom";
+import api from '../api';
+
 
 export default function Todo() {
   const [todos, setTodos] = useState([]);
@@ -117,9 +116,7 @@ export default function Todo() {
 const handleStartFocus = (todo) => {
   const { setSelectedTitle } = useContext(TitleContext);
   setSelectedTodo(todo);
-  // 使用 useRouter 获取路由对象，然后使用 push 方法导航
-  const router = useRouter();
-  router.push('/pomodoro');
+  Navigate("./pomodoro");
 };
 
   // 删除待办事项
